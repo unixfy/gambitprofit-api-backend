@@ -11,6 +11,11 @@
  * This file is to be placed at /opt/strapi1/app/api/gambit-plays/models/gambit-plays.js.
  */
 
+// Configure variables here
+
+// Cost of Gambit card in SB
+var CARD_COST = 264;
+
 // Reward calculation function
 function calculateRewards(data) {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -39,7 +44,7 @@ function calculateRewards(data) {
     // Calculate profit of bet in Gambit tokens (100 = $1 usd)
     data.Calc.HighRisk.CalculatedReward = 300 * teams[0]['reward'];
     // Just convert the token revenue to profit in percentage
-    data.Calc.HighRisk.ProfitPerCard = parseFloat((((data.Calc.HighRisk.CalculatedReward - 264) / 264) * 100).toFixed(2));
+    data.Calc.HighRisk.ProfitPerCard = parseFloat((((data.Calc.HighRisk.CalculatedReward - CARD_COST) / CARD_COST) * 100).toFixed(2));
     // Name of the team to bet on
     data.Calc.HighRisk.TeamToBetOn = teams[0]['name'];
     // This is always set to 300
@@ -62,7 +67,7 @@ function calculateRewards(data) {
         // Calculate profit of bet in Gambit tokens (100 = $1 usd)
         data.Calc.MedRisk.CalculatedReward = Math.min((data.Calc.MedRisk.Team1BetAmount * teams[0]['reward']), (data.Calc.MedRisk.Team2BetAmount * teams[1]['reward']));
         // Just convert the token revenue to profit in percentage
-        data.Calc.MedRisk.ProfitPerCard = parseFloat((((data.Calc.MedRisk.CalculatedReward - 264) / 264) * 100).toFixed(2));
+        data.Calc.MedRisk.ProfitPerCard = parseFloat((((data.Calc.MedRisk.CalculatedReward - CARD_COST) / CARD_COST) * 100).toFixed(2));
 
 
         // Calculations for No-Risk betting
@@ -74,7 +79,7 @@ function calculateRewards(data) {
         // Calculate profit of bet in Gambit tokens (100 = $1 usd)
         data.Calc.NoRisk.CalculatedReward = Math.min((data.Calc.NoRisk.Team1BetAmount * data.Team1.Reward), (data.Calc.NoRisk.Team2BetAmount * data.Team2.Reward), (data.Calc.NoRisk.DrawBetAmount * data.Draw.Reward));
         // Just convert the token revenue to profit in percentage
-        data.Calc.NoRisk.ProfitPerCard = parseFloat((((data.Calc.NoRisk.CalculatedReward - 264) / 264) * 100).toFixed(2));
+        data.Calc.NoRisk.ProfitPerCard = parseFloat((((data.Calc.NoRisk.CalculatedReward - CARD_COST) / CARD_COST) * 100).toFixed(2));
     } else {
         // Calculations for No-Risk betting if Draw doesn't exist
 
@@ -84,7 +89,7 @@ function calculateRewards(data) {
         // Calculate profit of bet in Gambit tokens (100 = $1 usd)
         data.Calc.NoRisk.CalculatedReward = Math.min((data.Calc.NoRisk.Team1BetAmount * data.Team1.Reward), (data.Calc.NoRisk.Team2BetAmount * data.Team2.Reward));
         // Just convert the token revenue to profit in percentage
-        data.Calc.NoRisk.ProfitPerCard = parseFloat((((data.Calc.NoRisk.CalculatedReward - 264) / 264) * 100).toFixed(2));
+        data.Calc.NoRisk.ProfitPerCard = parseFloat((((data.Calc.NoRisk.CalculatedReward - CARD_COST) / CARD_COST) * 100).toFixed(2));
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
