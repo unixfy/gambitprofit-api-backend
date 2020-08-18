@@ -7,5 +7,5 @@ Private backend code for the GambitProfit API.
 
 ## Description of folders
 
-- backend-api-calculations: The models which perform calculations to populate the calculated fields in Strapi. 
+- backend-api-calculations: The models which perform calculations to populate the calculated fields in Strapi. Zip this up and drop it in /opt/strapi/app/api/gambit-plays
 - update-from-gambitrewards-script: The script which updates the API data automatically, pulling from GambitRewards.com. Designed to be run on AWS Lambda.
