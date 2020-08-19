@@ -121,7 +121,7 @@ def update(key, value, payload_upd):
     return payload_upd
 
 def cleanUp():
-
+    games = getMatches()
     print("Creating payload: Stage 3")
     
     payload = []
@@ -164,7 +164,6 @@ def cleanUp():
 
 # AWS Lambda handler function
 blacklist = []
-games = getMatches()
 def main(event, context):
     payload, payload_upd, ids_upd = cleanUp()
 
