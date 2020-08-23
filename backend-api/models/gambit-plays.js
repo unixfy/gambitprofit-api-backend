@@ -14,6 +14,7 @@
 // Configure variables here
 
 // Cost of Gambit card in SB
+// NEEDS TO BE RECONFIGURED IF SB CHANGES COST OF GAMBIT CARD
 var CARD_COST = 264;
 
 // Reward calculation function
@@ -95,11 +96,7 @@ function calculateRewards(data) {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Set the profitable boolean as long as least 2 of the 3 methods are profitable with 264SB cost.
-    if ((data.Calc.NoRisk.ProfitPerCard > 0.0 && data.Calc.MedRisk.ProfitPerCard > 0.0) || (data.Calc.HighRisk.ProfitPerCard > 0.0 && data.Calc.MedRisk.ProfitPerCard > 0.0) || (data.Calc.NoRisk.ProfitPerCard > 0.0 && data.Calc.HighRisk.ProfitPerCard > 0.0)) {
-        data.Calc.Profitable = true;
-    } else {
-        data.Calc.Profitable = false;
-    }
+    data.Calc.Profitable = (data.Calc.NoRisk.ProfitPerCard > 0.0 && data.Calc.MedRisk.ProfitPerCard > 0.0) || (data.Calc.HighRisk.ProfitPerCard > 0.0 && data.Calc.MedRisk.ProfitPerCard > 0.0) || (data.Calc.NoRisk.ProfitPerCard > 0.0 && data.Calc.HighRisk.ProfitPerCard > 0.0);
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -121,7 +118,6 @@ function calculateRewards(data) {
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    return;
 }
 
 module.exports = {
@@ -131,6 +127,6 @@ module.exports = {
         },
         beforeUpdate: async (params, data) => {
             calculateRewards(data);
-        },
+        }
     },
 };
