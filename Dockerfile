@@ -2,8 +2,8 @@ FROM strapi/base
 
 WORKDIR backend-api
 
-COPY ./package.json ./
-COPY ./yarn.lock ./
+COPY ./backend-api/package.json ./
+COPY ./backend-api/yarn.lock ./
 
 RUN yarn install
 
