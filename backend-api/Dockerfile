@@ -1,6 +1,6 @@
 FROM strapi/base
 
-WORKDIR .
+WORKDIR /opt/app
 
 COPY package.json ./
 COPY yarn.lock ./
@@ -14,3 +14,5 @@ RUN yarn build
 EXPOSE 1337
 
 CMD ["yarn", "start"]
+
+COPY . ./
