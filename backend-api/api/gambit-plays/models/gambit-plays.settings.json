@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "gambit_plays",
+  "info": {
+    "name": "Gambit Plays"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "PlayUrl": {
+      "type": "string",
+      "unique": true
+    },
+    "PlayDate": {
+      "type": "datetime",
+      "required": true
+    },
+    "Team1": {
+      "type": "component",
+      "repeatable": false,
+      "component": "teams.team-1",
+      "required": true
+    },
+    "Team2": {
+      "type": "component",
+      "repeatable": false,
+      "component": "teams.team-1",
+      "required": true
+    },
+    "Calc": {
+      "type": "component",
+      "repeatable": false,
+      "component": "teams.calc",
+      "required": true
+    },
+    "Draw": {
+      "type": "component",
+      "repeatable": false,
+      "component": "teams.draw",
+      "required": true
+    }
+  }
+}

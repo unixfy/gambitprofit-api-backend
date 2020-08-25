@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_teams_draws",
+  "info": {
+    "name": "Draw",
+    "icon": "draw-polygon"
+  },
+  "options": {},
+  "attributes": {
+    "Reward": {
+      "type": "decimal"
+    }
+  }
+}

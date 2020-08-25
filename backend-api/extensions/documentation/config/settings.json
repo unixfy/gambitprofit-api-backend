@@ -1,0 +1,47 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "GambitProfit API Docs",
+    "description": "The documentation for the GambitProfit.com API",
+    "termsOfService": "https://gambitprofit.com",
+    "contact": {
+      "name": "GambitProfit",
+      "email": "admin@unixfy.me",
+      "url": "https://gambitprofit.com"
+    },
+    "license": {
+      "name": "Proprietary License",
+      "url": "https://en.wikipedia.org/wiki/Proprietary_software"
+    }
+  },
+  "x-strapi-config": {
+    "path": "/docs",
+    "showGeneratedFiles": true,
+    "pluginsForWhichToGenerateDoc": [
+      "users-permissions"
+    ]
+  },
+  "servers": [
+    {
+      "url": "https://api.gambitprofit.com",
+      "description": "Production API"
+    },
+    {
+      "url": "https://api-dev.gambitprofit.com",
+      "description": "Development API"
+    }
+  ],
+  "externalDocs": {
+    "description": "GambitProfit FAQs",
+    "url": "https://strapi.io/documentation/"
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {},
+  "tags": [],
+  "components": {}
+}

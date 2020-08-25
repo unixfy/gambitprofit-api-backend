@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_calculated_no_risks",
+  "info": {
+    "name": "NoRisk",
+    "icon": "thumbs-up"
+  },
+  "options": {},
+  "attributes": {
+    "CalculatedReward": {
+      "type": "decimal"
+    },
+    "ProfitPerCard": {
+      "type": "float"
+    },
+    "Team1BetAmount": {
+      "type": "decimal"
+    },
+    "Team2BetAmount": {
+      "type": "decimal"
+    },
+    "DrawBetAmount": {
+      "type": "decimal"
+    }
+  }
+}

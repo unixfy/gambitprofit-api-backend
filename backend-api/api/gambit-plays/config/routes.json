@@ -1,0 +1,68 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/gambit-plays",
+      "handler": "gambit-plays.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/gambit-plays/count",
+      "handler": "gambit-plays.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/gambit-plays/:id",
+      "handler": "gambit-plays.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/gambit-plays",
+      "handler": "gambit-plays.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/gambit-plays/:id",
+      "handler": "gambit-plays.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/gambit-plays/:id",
+      "handler": "gambit-plays.delete",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/gambit-plays/tokens/:tokens",
+      "handler": "gambit-plays.findTokens",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/gambit-plays/:id/tokens/:tokens",
+      "handler": "gambit-plays.findOneTokens",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_calculated_high_risks",
+  "info": {
+    "name": "HighRisk",
+    "icon": "stop"
+  },
+  "options": {},
+  "attributes": {
+    "CalculatedReward": {
+      "type": "decimal"
+    },
+    "ProfitPerCard": {
+      "type": "float"
+    },
+    "TeamToBetOn": {
+      "type": "string"
+    },
+    "BetAmount": {
+      "type": "integer",
+      "default": 300
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_calculated_med_risks",
+  "info": {
+    "name": "MedRisk",
+    "icon": "exclamation-triangle"
+  },
+  "options": {},
+  "attributes": {
+    "CalculatedReward": {
+      "type": "decimal"
+    },
+    "ProfitPerCard": {
+      "type": "float"
+    },
+    "Team1ToBetOn": {
+      "type": "string"
+    },
+    "Team2ToBetOn": {
+      "type": "string"
+    },
+    "Team1BetAmount": {
+      "type": "decimal"
+    },
+    "Team2BetAmount": {
+      "type": "decimal"
+    }
+  }
+}

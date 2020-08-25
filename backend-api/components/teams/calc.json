@@ -1,0 +1,40 @@
+{
+  "collectionName": "components_teams_calcs",
+  "info": {
+    "name": "Calc",
+    "icon": "plus-circle"
+  },
+  "options": {},
+  "attributes": {
+    "Profitable": {
+      "type": "boolean",
+      "required": false
+    },
+    "HighRisk": {
+      "type": "component",
+      "repeatable": false,
+      "component": "calculated.high-risk",
+      "required": true
+    },
+    "MedRisk": {
+      "type": "component",
+      "repeatable": false,
+      "component": "calculated.med-risk",
+      "required": true
+    },
+    "NoRisk": {
+      "type": "component",
+      "repeatable": false,
+      "component": "calculated.no-risk",
+      "required": true
+    },
+    "Recommended": {
+      "type": "enumeration",
+      "enum": [
+        "NoRisk",
+        "MedRisk",
+        "HighRisk"
+      ]
+    }
+  }
+}

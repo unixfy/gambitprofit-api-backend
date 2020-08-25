@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_teams_team_1s",
+  "info": {
+    "name": "Team 1",
+    "icon": "object-group"
+  },
+  "options": {},
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true
+    },
+    "Reward": {
+      "type": "decimal",
+      "required": true,
+      "min": 1
+    }
+  }
+}
