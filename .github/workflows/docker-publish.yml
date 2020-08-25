@@ -48,7 +48,7 @@ jobs:
       - uses: actions/checkout@v2
         
       - name: Move to backend-api folder
-        run: cd backend-api/        
+        run: cd backend-api/ && pwd && ls -lR
         
       - name: Build image
         run: docker build . --file Dockerfile --tag $IMAGE_NAME
