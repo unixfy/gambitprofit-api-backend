@@ -1,6 +1,6 @@
 FROM strapi/base
 
-WORKDIR backend
+WORKDIR .
 
 COPY package.json ./
 COPY yarn.lock ./
