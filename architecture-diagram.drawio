@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-08-27T16:56:32.132Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36" etag="Wba0cbTIsyspXHAPS6qE" version="13.6.5" type="github">
+<mxfile host="app.diagrams.net" modified="2020-08-27T21:11:46.241Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36" etag="H-yFlxxwWHBrpDOaMOO9" version="13.6.5" type="github">
   <diagram id="3d_x7aO1-6Rgeh-H54k9" name="Page-1">
-    <mxGraphModel dx="1103" dy="649" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1103" dy="698" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -31,7 +31,7 @@
         <mxCell id="RZYhJJ1I0vibL9IdBDJl-13" value="GambitProfit-VPC 10.0.0.0/24" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fillColor=#ffffff;" parent="RZYhJJ1I0vibL9IdBDJl-14" vertex="1">
           <mxGeometry x="69.6783870967742" width="170" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="niocbzRT4QayXPcRYGBD-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="RZYhJJ1I0vibL9IdBDJl-14" source="un2CQEB-7NKWW7TorBul-1" target="un2CQEB-7NKWW7TorBul-2">
+        <mxCell id="niocbzRT4QayXPcRYGBD-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="RZYhJJ1I0vibL9IdBDJl-14" source="un2CQEB-7NKWW7TorBul-1" target="un2CQEB-7NKWW7TorBul-2" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="un2CQEB-7NKWW7TorBul-1" value="gambitprofit-service-ec2" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.ec2_compute_container;fillColor=#F58534;gradientColor=none;" parent="RZYhJJ1I0vibL9IdBDJl-14" vertex="1">
@@ -40,16 +40,16 @@
         <mxCell id="un2CQEB-7NKWW7TorBul-2" value="gambitprofit-db" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.ec2;" parent="RZYhJJ1I0vibL9IdBDJl-14" vertex="1">
           <mxGeometry x="400" y="186.25" width="60" height="85" as="geometry" />
         </mxCell>
-        <mxCell id="niocbzRT4QayXPcRYGBD-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="RZYhJJ1I0vibL9IdBDJl-14" source="sYW_Sa25Huswuf3ZpZ7n-3" target="RZYhJJ1I0vibL9IdBDJl-20">
+        <mxCell id="niocbzRT4QayXPcRYGBD-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="RZYhJJ1I0vibL9IdBDJl-14" source="sYW_Sa25Huswuf3ZpZ7n-3" target="RZYhJJ1I0vibL9IdBDJl-20" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="sYW_Sa25Huswuf3ZpZ7n-3" value="backend.gambitprofit.com" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.route_53;" parent="RZYhJJ1I0vibL9IdBDJl-14" vertex="1">
           <mxGeometry x="-20" y="181.25" width="62.22" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="niocbzRT4QayXPcRYGBD-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="RZYhJJ1I0vibL9IdBDJl-14" source="RZYhJJ1I0vibL9IdBDJl-20" target="niocbzRT4QayXPcRYGBD-1">
+        <mxCell id="niocbzRT4QayXPcRYGBD-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="RZYhJJ1I0vibL9IdBDJl-14" source="RZYhJJ1I0vibL9IdBDJl-20" target="niocbzRT4QayXPcRYGBD-1" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="niocbzRT4QayXPcRYGBD-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="RZYhJJ1I0vibL9IdBDJl-14" source="RZYhJJ1I0vibL9IdBDJl-20" target="niocbzRT4QayXPcRYGBD-2">
+        <mxCell id="niocbzRT4QayXPcRYGBD-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="RZYhJJ1I0vibL9IdBDJl-14" source="RZYhJJ1I0vibL9IdBDJl-20" target="niocbzRT4QayXPcRYGBD-2" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="170" y="221" />
@@ -60,25 +60,25 @@
         <mxCell id="RZYhJJ1I0vibL9IdBDJl-20" value="gambitprofit-strapi-cluster-ec2" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.ecs;" parent="RZYhJJ1I0vibL9IdBDJl-14" vertex="1">
           <mxGeometry x="90" y="175" width="56" height="92.5" as="geometry" />
         </mxCell>
-        <mxCell id="niocbzRT4QayXPcRYGBD-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="RZYhJJ1I0vibL9IdBDJl-14" source="niocbzRT4QayXPcRYGBD-1" target="niocbzRT4QayXPcRYGBD-6">
+        <mxCell id="niocbzRT4QayXPcRYGBD-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="RZYhJJ1I0vibL9IdBDJl-14" source="niocbzRT4QayXPcRYGBD-1" target="niocbzRT4QayXPcRYGBD-6" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="niocbzRT4QayXPcRYGBD-1" value="gambitprofit-app2" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.ec2;" vertex="1" parent="RZYhJJ1I0vibL9IdBDJl-14">
+        <mxCell id="niocbzRT4QayXPcRYGBD-1" value="gambitprofit-app2" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.ec2;" parent="RZYhJJ1I0vibL9IdBDJl-14" vertex="1">
           <mxGeometry x="195" y="92.25" width="65.32" height="89" as="geometry" />
         </mxCell>
-        <mxCell id="niocbzRT4QayXPcRYGBD-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="RZYhJJ1I0vibL9IdBDJl-14" source="niocbzRT4QayXPcRYGBD-2" target="un2CQEB-7NKWW7TorBul-1">
+        <mxCell id="niocbzRT4QayXPcRYGBD-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="RZYhJJ1I0vibL9IdBDJl-14" source="niocbzRT4QayXPcRYGBD-2" target="un2CQEB-7NKWW7TorBul-1" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="niocbzRT4QayXPcRYGBD-2" value="gambitprofit-app1" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.ec2;" vertex="1" parent="RZYhJJ1I0vibL9IdBDJl-14">
+        <mxCell id="niocbzRT4QayXPcRYGBD-2" value="gambitprofit-app1" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.ec2;" parent="RZYhJJ1I0vibL9IdBDJl-14" vertex="1">
           <mxGeometry x="195" y="271.25" width="65.45" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="niocbzRT4QayXPcRYGBD-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="RZYhJJ1I0vibL9IdBDJl-14" source="niocbzRT4QayXPcRYGBD-6" target="un2CQEB-7NKWW7TorBul-2">
+        <mxCell id="niocbzRT4QayXPcRYGBD-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="RZYhJJ1I0vibL9IdBDJl-14" source="niocbzRT4QayXPcRYGBD-6" target="un2CQEB-7NKWW7TorBul-2" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="niocbzRT4QayXPcRYGBD-6" value="gambitprofit-service-ec2" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.ec2_compute_container;fillColor=#F58534;gradientColor=none;" vertex="1" parent="RZYhJJ1I0vibL9IdBDJl-14">
+        <mxCell id="niocbzRT4QayXPcRYGBD-6" value="gambitprofit-service-ec2" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.ec2_compute_container;fillColor=#F58534;gradientColor=none;" parent="RZYhJJ1I0vibL9IdBDJl-14" vertex="1">
           <mxGeometry x="300" y="113.13" width="82.17" height="47.25" as="geometry" />
         </mxCell>
-        <mxCell id="niocbzRT4QayXPcRYGBD-12" value="load balancing" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Courier New;" vertex="1" parent="RZYhJJ1I0vibL9IdBDJl-14">
+        <mxCell id="niocbzRT4QayXPcRYGBD-12" value="dns load balancing" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Courier New;" parent="RZYhJJ1I0vibL9IdBDJl-14" vertex="1">
           <mxGeometry x="-8.889999999999986" y="267.5" width="40" height="20" as="geometry" />
         </mxCell>
         <mxCell id="RZYhJJ1I0vibL9IdBDJl-16" value="update-from-gambitrewards" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.lambda;" parent="1" vertex="1">
@@ -102,10 +102,10 @@
             <mxPoint x="-14.2" y="-3.49" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="niocbzRT4QayXPcRYGBD-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="RZYhJJ1I0vibL9IdBDJl-17" target="sYW_Sa25Huswuf3ZpZ7n-3">
+        <mxCell id="niocbzRT4QayXPcRYGBD-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="RZYhJJ1I0vibL9IdBDJl-17" target="sYW_Sa25Huswuf3ZpZ7n-3" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="RZYhJJ1I0vibL9IdBDJl-17" value="Amazon API Gateway" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.api_gateway;" parent="1" vertex="1">
+        <mxCell id="RZYhJJ1I0vibL9IdBDJl-17" value="gambitprofit-api" style="outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.api_gateway;" parent="1" vertex="1">
           <mxGeometry x="470" y="313.75" width="50" height="75" as="geometry" />
         </mxCell>
         <mxCell id="RZYhJJ1I0vibL9IdBDJl-43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="RZYhJJ1I0vibL9IdBDJl-39" target="RZYhJJ1I0vibL9IdBDJl-17" edge="1">
