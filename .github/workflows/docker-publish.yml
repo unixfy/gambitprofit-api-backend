@@ -47,16 +47,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         
-      - name: Move to backend-api folder
-        run: cd backend-api/        
-        
       - name: Build image
         run: docker build . --file Dockerfile --tag $IMAGE_NAME
+        working-directory: backend-api
 
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+        working-directory: backend-api
 
       - name: Push image
+        working-directory: backend-api
         run: |
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
 
@@ -77,3 +77,4 @@ jobs:
 
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
+        
