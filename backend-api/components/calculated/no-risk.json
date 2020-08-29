@@ -20,6 +20,10 @@
     },
     "DrawBetAmount": {
       "type": "decimal"
+    },
+    "Recommended": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

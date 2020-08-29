@@ -27,14 +27,6 @@
       "repeatable": false,
       "component": "calculated.no-risk",
       "required": true
-    },
-    "Recommended": {
-      "type": "enumeration",
-      "enum": [
-        "NoRisk",
-        "MedRisk",
-        "HighRisk"
-      ]
     }
   }
 }

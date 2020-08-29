@@ -23,6 +23,10 @@
     },
     "Team2BetAmount": {
       "type": "decimal"
+    },
+    "Recommended": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
