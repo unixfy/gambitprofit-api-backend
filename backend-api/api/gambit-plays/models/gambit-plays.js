@@ -109,12 +109,12 @@ function calculateRewards(data) {
             data.Calc.MedRisk.Recommended = true;
             // If none of the others (above) are true, and NoRisk is more profitable than Powerball
         } else {
-            data.Calc.MedRisk.Recommended = true;
+            data.Calc.MedRisk.Recommended = false;
         }
         if (data.Calc.NoRisk.ProfitPerCard > 0) {
             data.Calc.NoRisk.Recommended = true;
         } else {
-            data.Calc.NoRisk.Recommended = true;
+            data.Calc.NoRisk.Recommended = false;
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
