@@ -95,27 +95,24 @@ function calculateRewards(data) {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Automatically set the recommended boolean for each bet method
-    // ONLY EVALUATE if the bet is actually profitable
-    if (data.Calc.Profitable == true) {
-        // If the profit per card of HighRisk is greater than that of MedRisk and NoRisk AND the reward of the lowest-risk team is less than 1.10, then HighRisk is the recommended method
-        if ((data.Calc.HighRisk.ProfitPerCard > 0) && (teams[0]['reward'] < 1.10)) {
-            data.Calc.HighRisk.Recommended = true;
-            // If Draw is defined AND the difference between the rewards of the two riskiest teams is greater than or equal to 1.50 (so the chance of the underdog winning is low)
-        } else {
-            data.Calc.HighRisk.Recommended = false;
-        }
-        if (data.Draw.Reward && data.Calc.MedRisk.ProfitPerCard > 0 && (teams[2]['reward'] - teams[1]['reward']) >= 1.50) {
-            data.Calc.MedRisk.Recommended = true;
-            // If none of the others (above) are true, and NoRisk is more profitable than Powerball
-        } else {
-            data.Calc.MedRisk.Recommended = false;
-        }
-        if (data.Calc.NoRisk.ProfitPerCard > 0) {
-            data.Calc.NoRisk.Recommended = true;
-        } else {
-            data.Calc.NoRisk.Recommended = false;
-        }
+    // Automatically set the recommended boolean for each bet metho
+    // If the profit per card of HighRisk is greater than that of MedRisk and NoRisk AND the reward of the lowest-risk team is less than 1.10, then HighRisk is the recommended method
+    if ((data.Calc.HighRisk.ProfitPerCard > 0) && (teams[0]['reward'] < 1.10)) {
+        data.Calc.HighRisk.Recommended = true;
+        // If Draw is defined AND the difference between the rewards of the two riskiest teams is greater than or equal to 1.50 (so the chance of the underdog winning is low)
+    } else {
+        data.Calc.HighRisk.Recommended = false;
+    }
+    if (data.Draw.Reward && data.Calc.MedRisk.ProfitPerCard > 0 && (teams[2]['reward'] - teams[1]['reward']) >= 1.50) {
+        data.Calc.MedRisk.Recommended = true;
+        // If none of the others (above) are true, and NoRisk is more profitable than Powerball
+    } else {
+        data.Calc.MedRisk.Recommended = false;
+    }
+    if (data.Calc.NoRisk.ProfitPerCard > 0) {
+        data.Calc.NoRisk.Recommended = true;
+    } else {
+        data.Calc.NoRisk.Recommended = false;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
