@@ -35,7 +35,7 @@ function recalculateRewards(play, tokens) {
     //
     // The formulas below can be copy and pasted from models/gambit-plays.js, replacing instances of 'play' with 'play' and '300' with 'tokens'
     //
-    
+
     // HighRisk
     play.Calc.HighRisk.CalculatedReward = tokens * teams[0]['reward'];
     // Need to add parsefloat to tokens, because tokens is a string
