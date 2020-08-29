@@ -20,8 +20,7 @@
       "default": 300
     },
     "Recommended": {
-      "type": "boolean",
-      "default": false
+      "type": "boolean"
     }
   }
 }
