@@ -24,7 +24,7 @@ USERNAME = os.environ['GAMBIT_USERNAME']
 PASSWORD = os.environ['GAMBIT_PASSWORD']
 
 # API endpoint
-API_ENDPOINT = "https://api.gambitprofit.com/"
+API_ENDPOINT = "https://hfj9ocdja8.execute-api.eu-west-1.amazonaws.com/"
 # API backend credentials
 API_USERNAME = os.environ['API_USERNAME']
 API_PASSWORD = os.environ['API_PASSWORD']
