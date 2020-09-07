@@ -22,6 +22,9 @@ API_PARAMS = {
 # Set storage file location (note that this would be stored in an EFS volume on Lambda)
 storage_file = "test.txt"
 
+# Percentage profit NoRisk at which a notification will be triggered.
+notif_threshold = 4.0
+
 # Array of Discord webhook URLs
 discord_webhooks = [
     "***REMOVED***"]
@@ -128,7 +131,7 @@ def main():
             "Name"] + " (" + str(bet["Team2"]["Reward"]) + ")"
 
         # Make sure there are at least 30 min until play starts, and the norisk profitpercard is at least 4%
-        if (difference.total_seconds() / 60) > 30 and bet["Calc"]["NoRisk"]["ProfitPerCard"] > 3.00:
+        if (difference.total_seconds() / 60) > 30 and bet["Calc"]["NoRisk"]["ProfitPerCard"] > notif_threshold:
             # Prelim passed means the game hasn't started, and is profitable enough
             print(colored(gamename + " => PRELIM PASSED", "yellow"))
             # Validate if the game is in the storage file (i.e. already notified). If it is not, then notify; otherwise, pass
