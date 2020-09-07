@@ -1,7 +1,9 @@
 ############## HOW TO USE ##############
 # Run on AWS Lambda using main() function as handler. Set environment variables (ENCRYPTED) to hold credentials.
 
-import json, requests, dateutil.parser
+import json
+import requests
+import dateutil.parser
 from datetime import datetime, timezone
 from termcolor import colored
 from colorama import init
