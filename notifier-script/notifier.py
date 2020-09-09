@@ -41,11 +41,6 @@ discord_headers = {
 
 ###################### END user configuration section ######################
 
-queue = []
-
-api_get = requests.get(url=API_ENDPOINT, params=API_PARAMS)
-api_data = api_get.json()
-
 print("Fetched API data.")
 
 # Init Boto3 S3 client
@@ -126,6 +121,11 @@ def sendNotifs():
 
 # This is the lambda handler function
 def main(event, context):
+    global queue
+    queue = []
+
+    api_get = requests.get(url=API_ENDPOINT, params=API_PARAMS)
+    api_data = api_get.json()
     # Try to download storage file from S3
     try:
         s3.download_file("gambitprofit-notifier-storage", storage_file_s3, storage_file)
