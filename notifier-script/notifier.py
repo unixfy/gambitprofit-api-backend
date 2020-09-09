@@ -125,7 +125,7 @@ def sendNotifs():
 
 
 # This is the lambda handler function
-def main():
+def main(event, context):
     # Try to download storage file from S3
     try:
         s3.download_file("gambitprofit-notifier-storage", storage_file_s3, storage_file)
