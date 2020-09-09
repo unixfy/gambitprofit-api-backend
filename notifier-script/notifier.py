@@ -4,6 +4,7 @@
 import json
 import requests
 import dateutil.parser
+import boto3
 from datetime import datetime, timezone
 from termcolor import colored
 from colorama import init
@@ -19,8 +20,12 @@ API_PARAMS = {
     "_sort": "updatedAt:DESC"
 }
 
-# Set storage file location (note that this would be stored in an EFS volume on Lambda)
-storage_file = "test.txt"
+# Set LOCAL storage file location (note that this would be stored in an S3 bucket on Lambda)
+# Needs to be an ABSOLUTE PATH
+storage_file = "/tmp/storage.txt"
+
+# Set REMOTE (S3) storage file location
+storage_file_s3 = "storage.txt"
 
 # Percentage profit NoRisk at which a notification will be triggered.
 notif_threshold = 4.0
@@ -43,6 +48,8 @@ api_data = api_get.json()
 
 print("Fetched API data.")
 
+# Init Boto3 S3 client
+s3 = boto3.client("s3")
 
 # This function will search storage text file by id, returning true if id is not in the file; false if it is
 def getData(id):
@@ -119,6 +126,13 @@ def sendNotifs():
 
 # This is the lambda handler function
 def main():
+    # Try to download storage file from S3
+    try:
+        s3.download_file("gambitprofit-notifier-storage", storage_file_s3, storage_file)
+        print(colored("Downloaded storage file from S3.", "blue"))
+    except:
+        print(colored("Failed to download storage file from S3.", "blue"))
+        pass
     # Loop through the data returned by the API
     for bet in api_data:
         # Time until play starts calculator
@@ -156,5 +170,9 @@ def main():
         sendNotifs()
     else:
         print(colored("Script succeeded, but no notifications need to be sent.", "blue"))
+
+    # Write storage file to S3
+    s3.upload_file(storage_file, "gambitprofit-notifier-storage", storage_file_s3)
+    print(colored("Wrote storage file back to S3.", "blue"))
 
 main()
