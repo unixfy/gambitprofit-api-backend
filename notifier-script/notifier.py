@@ -39,6 +39,17 @@ discord_headers = {
     "Content-Type": "application/json"
 }
 
+# OneSignal Configuration
+# OneSignal App ID
+onesignal_appid = "36fc80c9-f793-4dab-803e-312736cd1115"
+onesignal_apikey = "YThmMjQxNTUtNTgwMS00MzRkLWEzZTktNGZlOWUxMGI1MThl"
+
+# Headers to send to OneSignal API
+onesignal_headers = {
+    "Content-Type": "application/json; charset=utf-8",
+    "Authorization": "Basic " + onesignal_apikey
+}
+
 ###################### END user configuration section ######################
 
 print("Fetched API data.")
@@ -79,6 +90,7 @@ def addToQueue(gamename, id, profitpercard):
 
 # This function sends one condensed notification based on the queue
 def sendNotifs():
+    # Discord notifications
     discord_payload = {
         "content": "Gambit Plays were found!",
         "embeds": [
@@ -116,7 +128,22 @@ def sendNotifs():
     for item in discord_webhooks:
         print(colored("Sending POST to Discord webhook now!", "blue"))
         discord_post = requests.post(item, data=json.dumps(discord_payload), headers=discord_headers)
-        print(discord_post.text)
+        print(discord_post.status_code)
+
+
+    # OneSignal (push) notifications
+    onesignal_payload = {
+        "app_id": onesignal_appid,
+        "included_segments": ["Subscribed Users"],
+        "url": "https://gambitprofit.com",
+        "contents": {
+            "en": len(queue) + "new Gambit plays were found!"
+        },
+        "template_id": "75417325-f4cd-420e-a531-1a82d98c10b1"
+    }
+    print(colored("Sending POST to OneSignal API now!", "blue"))
+    onesignal_post = requests.post("https://onesignal.com/api/v1/notifications", headers=onesignal_headers, data=json.dumps(onesignal_payload))
+    print(onesignal_post.status_code, onesignal_post.reason)
 
 
 # This is the lambda handler function
