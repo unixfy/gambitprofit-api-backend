@@ -137,7 +137,7 @@ def sendNotifs():
         "included_segments": ["Subscribed Users"],
         "url": "https://gambitprofit.com",
         "contents": {
-            "en": len(queue) + "new Gambit plays were found!"
+            "en": str(len(queue)) + " new Gambit plays were found!"
         },
         "template_id": "75417325-f4cd-420e-a531-1a82d98c10b1"
     }
