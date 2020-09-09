@@ -174,5 +174,3 @@ def main(event, context):
     # Write storage file to S3
     s3.upload_file(storage_file, "gambitprofit-notifier-storage", storage_file_s3)
     print(colored("Wrote storage file back to S3.", "blue"))
-
-main()
