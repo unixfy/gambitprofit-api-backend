@@ -32,7 +32,8 @@ notif_threshold = 4.0
 
 # Array of Discord webhook URLs
 discord_webhooks = [
-    "***REMOVED***"]
+    "***REMOVED***",
+"***REMOVED***"]
 
 # Headers to send to Discord webhook
 discord_headers = {
