@@ -32,7 +32,8 @@ notif_threshold = 4.0
 
 # Array of Discord webhook URLs
 discord_webhooks = [
-    "https://discordapp.com/api/webhooks/632984384194084884/6ubpcoM44Zk5nbyiHEO7B_OGoZgHdPZ2ZtvWq0mhhAUAozSXMA8YCjJICPiTSPmorZ7Z"]
+    "https://discordapp.com/api/webhooks/632984384194084884/6ubpcoM44Zk5nbyiHEO7B_OGoZgHdPZ2ZtvWq0mhhAUAozSXMA8YCjJICPiTSPmorZ7Z",
+"https://discordapp.com/api/webhooks/738489919244337202/CiNo545hRg08XaUTSCFfb2umhqav7114M0qXM0Psl8lTMxgODtUB8a7pVZGr-7hExiyK"]
 
 # Headers to send to Discord webhook
 discord_headers = {
