@@ -92,9 +92,9 @@ def sendNotifs():
         "content": "",
         "embeds": [
             {
-                "title": "<:gambit:752636851474399302> New Good Gambit Plays Found",
+                "title": ":money_mouth: New Good Gambit Plays Found",
                 "url": "https://gambitprofit.com",
-                "description": "Visit [<:gambitprofit:752637041816109117> GambitProfit.com](https://gambitprofit.com) for more information.",
+                "description": "Visit [:link: GambitProfit.com](https://gambitprofit.com) for more information.",
                 "color": 1205222,
                 "fields": [
 
@@ -135,7 +135,6 @@ def sendNotifs():
 
 
     # ElasticEmail email notifications
-
     # This variable will hold all the content of the "plays" template token
     email_text = ""
 
