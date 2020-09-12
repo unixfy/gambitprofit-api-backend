@@ -43,16 +43,9 @@ discord_headers = {
     "Content-Type": "application/json"
 }
 
-# OneSignal Configuration
-# OneSignal App ID
-# onesignal_appid = "36fc80c9-f793-4dab-803e-312736cd1115"
-# onesignal_apikey = "YThmMjQxNTUtNTgwMS00MzRkLWEzZTktNGZlOWUxMGI1MThl"
-#
-# # Headers to send to OneSignal API
-# onesignal_headers = {
-#     "Content-Type": "application/json; charset=utf-8",
-#     "Authorization": "Basic " + onesignal_apikey
-# }
+# ElasticEmail configuration
+# ElasticEmail API key
+elasticemail_apikey = "22539364F8041F4D9AFDB0ACB5C9D8B994168276155A4FC4AABFB052FCF62FA70793153145A001486B6F675ECDAB3032"
 
 ###################### END user configuration section ######################
 
@@ -141,19 +134,31 @@ def sendNotifs():
         print(discord_post.status_code)
 
 
-    # OneSignal (push) notifications
-    # onesignal_payload = {
-    #     "app_id": onesignal_appid,
-    #     "included_segments": ["Subscribed Users"],
-    #     "url": "https://gambitprofit.com",
-    #     "contents": {
-    #         "en": str(len(queue)) + " new Gambit plays were found!"
-    #     },
-    #     "template_id": "75417325-f4cd-420e-a531-1a82d98c10b1"
-    # }
-    # print(colored("Sending POST to OneSignal API now!", "blue"))
-    # onesignal_post = requests.post("https://onesignal.com/api/v1/notifications", headers=onesignal_headers, data=json.dumps(onesignal_payload))
-    # print(onesignal_post.status_code, onesignal_post.reason)
+    # ElasticEmail email notifications
+
+    # This variable will hold all the content of the "plays" template token
+    email_text = ""
+
+    # Parameters for ElasticEmail API
+    elasticemail_parameters = {
+        "apikey": elasticemail_apikey,
+        "lists": "GambitProfit Notifications",
+        "template": "GambitProfitBetNotificationMail",
+        "channel": "HTTP API",
+        "charset": "utf-8"
+    }
+
+    # Construct the "plays" template token content (bullet point for each play)
+    for item in queue:
+        email_text = email_text + "<li>" + item["gamename"] + " - " + str(item["profitpercard"]) + "% profit or more"
+
+    # Add constructed content to the API request params
+    elasticemail_parameters["merge_plays"] = "<ul>" + email_text + "</ul>"
+
+    # Fire off API request
+    print(colored("Sending POST to ElasticEmail API now!", "blue"))
+    elasticemail_post = requests.post("https://api.elasticemail.com/v2/email/send", params=elasticemail_parameters)
+    print(elasticemail_post.status_code, elasticemail_post.text)
 
 
 # This is the lambda handler function
