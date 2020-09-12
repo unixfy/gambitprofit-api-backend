@@ -31,9 +31,12 @@ storage_file_s3 = "storage.txt"
 notif_threshold = 4.0
 
 # Array of Discord webhook URLs
+# Unixfy server, BM server, SB server
 discord_webhooks = [
-    "***REMOVED***",
-"***REMOVED***"]
+"***REMOVED***",
+"***REMOVED***",
+"***REMOVED***"
+]
 
 # Headers to send to Discord webhook
 discord_headers = {
@@ -93,7 +96,7 @@ def addToQueue(gamename, id, profitpercard):
 def sendNotifs():
     # Discord notifications
     discord_payload = {
-        "content": "Gambit Plays were found!",
+        "content": "",
         "embeds": [
             {
                 "title": "<:gambit:752636851474399302> New Good Gambit Plays Found",
@@ -127,6 +130,12 @@ def sendNotifs():
 
     # Send notification to each Discord webhook
     for item in discord_webhooks:
+        # Add ping if the webhook is the SB server one
+        if "***REMOVED***" in item:
+            discord_payload["content"] = "Gambit Plays were found! - <@&754060824850464879>"
+        else:
+            discord_payload["content"] = "Gambit Plays were found!"
+
         print(colored("Sending POST to Discord webhook now!", "blue"))
         discord_post = requests.post(item, data=json.dumps(discord_payload), headers=discord_headers)
         print(discord_post.status_code)
