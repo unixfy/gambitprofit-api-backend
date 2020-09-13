@@ -123,6 +123,7 @@ def update(key, value, payload_upd):
 def cleanUp():
     games = getMatches()
     print("Creating payload: Stage 3")
+    print(games)
     
     payload = []
     payload_upd = []
