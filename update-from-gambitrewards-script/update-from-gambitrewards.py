@@ -44,7 +44,7 @@ def getMatches():
         matches = s.get(MATCHES_ENDPOINT, headers={"Authorization": authtoken})
 
         matches_response = json.loads(matches.content)
-        print("Matches response from GambitRewards: " + matches_response)
+        print("Matches response from GambitRewards: " + str(matches_response))
 
         print("Collected matches")
 
