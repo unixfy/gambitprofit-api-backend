@@ -43,13 +43,13 @@ function calculateRewards(data) {
     // Calculations for Risky betting (we put this here because it works the same regardless of if there is draw)
 
     // Calculate profit of bet in Gambit tokens (100 = $1 usd)
-    data.Calc.HighRisk.CalculatedReward = 300 * teams[0]['reward'];
+    data.Calc.HighRisk.CalculatedReward = 1000 * teams[0]['reward'];
     // Just convert the token revenue to profit in percentage
     data.Calc.HighRisk.ProfitPerCard = parseFloat((((data.Calc.HighRisk.CalculatedReward - CARD_COST) / CARD_COST) * 100).toFixed(2));
     // Name of the team to bet on
     data.Calc.HighRisk.TeamToBetOn = teams[0]['name'];
-    // This is always set to 300
-    data.Calc.HighRisk.BetAmount = 300;
+    // This is always set to 1000
+    data.Calc.HighRisk.BetAmount = 1000;
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,8 +63,8 @@ function calculateRewards(data) {
         data.Calc.MedRisk.Team1ToBetOn = teams[0]['name'];
         data.Calc.MedRisk.Team2ToBetOn = teams[1]['name'];
         // Calculate amount of tokens to bet on each team (formula is the same as no-risk for 2 teams)
-        data.Calc.MedRisk.Team1BetAmount = Math.round((300 * teams[1]['reward']) / (teams[1]['reward'] + teams[0]['reward']));
-        data.Calc.MedRisk.Team2BetAmount = Math.round((300 * teams[0]['reward']) / (teams[1]['reward'] + teams[0]['reward']));
+        data.Calc.MedRisk.Team1BetAmount = Math.round((1000 * teams[1]['reward']) / (teams[1]['reward'] + teams[0]['reward']));
+        data.Calc.MedRisk.Team2BetAmount = Math.round((1000 * teams[0]['reward']) / (teams[1]['reward'] + teams[0]['reward']));
         // Calculate profit of bet in Gambit tokens (100 = $1 usd)
         data.Calc.MedRisk.CalculatedReward = Math.min((data.Calc.MedRisk.Team1BetAmount * teams[0]['reward']), (data.Calc.MedRisk.Team2BetAmount * teams[1]['reward']));
         // Just convert the token revenue to profit in percentage
@@ -74,9 +74,9 @@ function calculateRewards(data) {
         // Calculations for No-Risk betting
 
         // Calculate amount of tokens to bet on each team (note: using the 3 team formula)
-        data.Calc.NoRisk.Team1BetAmount = Math.round((300 * data.Team2.Reward * data.Draw.Reward) / ((data.Team1.Reward * data.Team2.Reward) + (data.Team2.Reward * data.Draw.Reward) + (data.Team1.Reward * data.Draw.Reward)));
-        data.Calc.NoRisk.Team2BetAmount = Math.round((300 * data.Team1.Reward * data.Draw.Reward) / ((data.Team1.Reward * data.Team2.Reward) + (data.Team2.Reward * data.Draw.Reward) + (data.Team1.Reward * data.Draw.Reward)));
-        data.Calc.NoRisk.DrawBetAmount = Math.round((300 * data.Team2.Reward * data.Team1.Reward) / ((data.Team1.Reward * data.Team2.Reward) + (data.Team2.Reward * data.Draw.Reward) + (data.Team1.Reward * data.Draw.Reward)));
+        data.Calc.NoRisk.Team1BetAmount = Math.round((1000 * data.Team2.Reward * data.Draw.Reward) / ((data.Team1.Reward * data.Team2.Reward) + (data.Team2.Reward * data.Draw.Reward) + (data.Team1.Reward * data.Draw.Reward)));
+        data.Calc.NoRisk.Team2BetAmount = Math.round((1000 * data.Team1.Reward * data.Draw.Reward) / ((data.Team1.Reward * data.Team2.Reward) + (data.Team2.Reward * data.Draw.Reward) + (data.Team1.Reward * data.Draw.Reward)));
+        data.Calc.NoRisk.DrawBetAmount = Math.round((1000 * data.Team2.Reward * data.Team1.Reward) / ((data.Team1.Reward * data.Team2.Reward) + (data.Team2.Reward * data.Draw.Reward) + (data.Team1.Reward * data.Draw.Reward)));
         // Calculate profit of bet in Gambit tokens (100 = $1 usd)
         data.Calc.NoRisk.CalculatedReward = Math.min((data.Calc.NoRisk.Team1BetAmount * data.Team1.Reward), (data.Calc.NoRisk.Team2BetAmount * data.Team2.Reward), (data.Calc.NoRisk.DrawBetAmount * data.Draw.Reward));
         // Just convert the token revenue to profit in percentage
@@ -85,8 +85,8 @@ function calculateRewards(data) {
         // Calculations for No-Risk betting if Draw doesn't exist
 
         // Calculate amount of tokens to bet on each team (note: using the 2 team formula); Calc.NoRisk.DrawBetAmount will return null/undefined
-        data.Calc.NoRisk.Team1BetAmount = Math.round((300 * data.Team2.Reward) / (data.Team1.Reward + data.Team2.Reward));
-        data.Calc.NoRisk.Team2BetAmount = Math.round((300 * data.Team1.Reward) / (data.Team1.Reward + data.Team2.Reward));
+        data.Calc.NoRisk.Team1BetAmount = Math.round((1000 * data.Team2.Reward) / (data.Team1.Reward + data.Team2.Reward));
+        data.Calc.NoRisk.Team2BetAmount = Math.round((1000 * data.Team1.Reward) / (data.Team1.Reward + data.Team2.Reward));
         // Calculate profit of bet in Gambit tokens (100 = $1 usd)
         data.Calc.NoRisk.CalculatedReward = Math.min((data.Calc.NoRisk.Team1BetAmount * data.Team1.Reward), (data.Calc.NoRisk.Team2BetAmount * data.Team2.Reward));
         // Just convert the token revenue to profit in percentage

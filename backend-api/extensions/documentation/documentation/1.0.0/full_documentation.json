@@ -51,7 +51,7 @@
     "/gambit-plays": {
       "get": {
         "deprecated": false,
-        "description": "Get all Gambit plays stored in the API (including unprofitable plays!). Defaults to 300 tokens",
+        "description": "Get all Gambit plays stored in the API (including unprofitable plays!). Defaults to 1000 tokens",
         "responses": {
           "200": {
             "description": "Success",
@@ -2453,7 +2453,7 @@
                   },
                   "BetAmount": {
                     "type": "integer",
-                    "default": 300
+                    "default": 1000
                   }
                 }
               },
@@ -2714,7 +2714,7 @@
                   },
                   "BetAmount": {
                     "type": "integer",
-                    "default": 300
+                    "default": 1000
                   }
                 }
               },

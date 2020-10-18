@@ -765,7 +765,7 @@
                   },
                   "BetAmount": {
                     "type": "integer",
-                    "default": 300
+                    "default": 1000
                   }
                 }
               },
@@ -1026,7 +1026,7 @@
                   },
                   "BetAmount": {
                     "type": "integer",
-                    "default": 300
+                    "default": 1000
                   }
                 }
               },

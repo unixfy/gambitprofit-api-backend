@@ -17,7 +17,7 @@
     },
     "BetAmount": {
       "type": "integer",
-      "default": 300
+      "default": 1000
     },
     "Recommended": {
       "type": "boolean"
