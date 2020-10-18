@@ -15,7 +15,7 @@
 
 // Cost of Gambit card in SB
 // NEEDS TO BE RECONFIGURED IF SB CHANGES COST OF GAMBIT CARD
-var CARD_COST = 264;
+var CARD_COST = 880;
 
 // Reward calculation function
 function calculateRewards(data) {
