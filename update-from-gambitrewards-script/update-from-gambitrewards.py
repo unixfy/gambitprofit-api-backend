@@ -44,6 +44,7 @@ def getMatches():
         matches = s.get(MATCHES_ENDPOINT, headers={"Authorization": authtoken})
 
         matches_response = json.loads(matches.content)
+        print("Matches response from GambitRewards: " + str(matches_response))
 
         print("Collected matches")
 
@@ -123,6 +124,7 @@ def update(key, value, payload_upd):
 def cleanUp():
     games = getMatches()
     print("Creating payload: Stage 3")
+    print("Games pulled from GambitRewards: " + games)
     
     payload = []
     payload_upd = []
