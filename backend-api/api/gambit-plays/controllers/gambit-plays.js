@@ -11,9 +11,12 @@ const { sanitizeEntity } = require('strapi-utils');
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Function which recalculates all CalculatedRewards, ProfitPerCards and BetAmounts based on custom token amount
 function recalculateRewards(play, tokens) {
+
+    ////////////// CONFIGURATION //////////////
     // Change percentage here if discount changes
     // NEEDS TO BE RECONFIGURED IF SB CHANGES COST OF GAMBIT CARD
-    var CARD_COST = 0.88 * tokens;
+    var CARD_COST = 0.90 * tokens;
+    ////////////// CONFIGURATION //////////////
 
     // Magic to create one big array with all teams & respective names and reward
     var teams = [
