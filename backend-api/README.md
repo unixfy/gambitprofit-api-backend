@@ -1,3 +1,4 @@
-# Strapi application
+# GambitProfit.com
+#### Powered by Strapi
 
-A quick description of your strapi application
+This Strapi application stores all the plays for GambitProfit.com.
