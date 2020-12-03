@@ -28,7 +28,7 @@ storage_file = "/tmp/storage.txt"
 storage_file_s3 = "storage.txt"
 
 # Percentage profit NoRisk at which a notification will be triggered.
-notif_threshold = 3.5
+notif_threshold = 0
 
 # Array of Discord webhook URLs
 # Unixfy server, BM server, SB server
