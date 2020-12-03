@@ -203,7 +203,7 @@ def main(event, context):
                 pass
         else:
             # Fail means the game didn't pass the criteria ;(
-            print(colored(gamename + " => FAIL", "red"))
+            print(colored(f'{gamename} => FAIL', "red"))
 
     # Now that all the bets have been processed, send notifications IF queue is not empty
     if len(queue) > 0:
