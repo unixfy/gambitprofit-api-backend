@@ -28,7 +28,7 @@ storage_file = "/tmp/storage.txt"
 storage_file_s3 = "storage.txt"
 
 # Percentage profit NoRisk at which a notification will be triggered.
-notif_threshold = 0
+notif_threshold = -1.11
 
 # Array of Discord webhook URLs
 # Unixfy server, BM server, SB server
@@ -104,7 +104,7 @@ def sendNotifs():
                     "url": "https://gambitprofit.com"
                 },
                 "footer": {
-                    "text": "You can view more information about these bets, including how much to bet, at GambitProfit.com. \nNote: percent profit is calculated using 1000 tokens."
+                    "text": "You can view more information about these bets, including how much to bet, at GambitProfit.com. \nNote: percent profit is calculated using 300 tokens."
                 }
             }
         ],
@@ -203,7 +203,7 @@ def main(event, context):
                 pass
         else:
             # Fail means the game didn't pass the criteria ;(
-            print(colored(f'{gamename} => FAIL', "red"))
+            print(colored(gamename + " => FAIL", "red"))
 
     # Now that all the bets have been processed, send notifications IF queue is not empty
     if len(queue) > 0:
