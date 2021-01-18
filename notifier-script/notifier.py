@@ -104,7 +104,7 @@ def sendNotifs():
                     "url": "https://gambitprofit.com"
                 },
                 "footer": {
-                    "text": "You can view more information about these bets, including how much to bet, at GambitProfit.com. \nNote: percent profit is calculated using 300 tokens."
+                    "text": "You can view more information about these bets, including how much to bet, at GambitProfit.com. \nNote: percent profit is calculated using 1000 tokens."
                 }
             }
         ],
