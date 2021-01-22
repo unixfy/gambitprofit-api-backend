@@ -124,8 +124,8 @@ def update(key, value, payload_upd):
 def cleanUp():
     games = getMatches()
     print("Creating payload: Stage 3")
-    print("Games pulled from GambitRewards: " + games)
-    
+    print("Games pulled from GambitRewards: " + str(games))
+
     payload = []
     payload_upd = []
     ids_upd = []
@@ -148,24 +148,24 @@ def cleanUp():
                 counter += 1
                 if item["description"] == "Draw":
                     break
-            
+
             draw_reward = value["ptw"][counter]
             value["ptw"].pop(counter)
 
             PlayDate = value["datetime"][0:19] + value["datetime"][23:]
 
             payload.append({"Calc": {"HighRisk":{}, "MedRisk":{}, "NoRisk":{}}, "Draw": {"Reward": float(draw_reward["payout"])}, "PlayDate": PlayDate, "PlayUrl": "https://app.gambitrewards.com/match/" + key, "Team1": {"Name": value["ptw"][0]["description"], "Reward": float(value["ptw"][0]["payout"])}, "Team2": {"Name": value["ptw"][1]["description"], "Reward": float(value["ptw"][1]["payout"])}})
-            
-        elif len(value["ptw"]) < 3:    
+
+        elif len(value["ptw"]) < 3:
 
             PlayDate = value["datetime"][0:19] + value["datetime"][23:]
             payload.append({"Calc": {"HighRisk":{}, "MedRisk":{}, "NoRisk":{}}, "Draw": {}, "PlayDate": PlayDate, "PlayUrl": "https://app.gambitrewards.com/match/" + key, "Team1": {"Name": value["ptw"][0]["description"], "Reward": float(value["ptw"][0]["payout"])}, "Team2": {"Name": value["ptw"][1]["description"], "Reward": float(value["ptw"][1]["payout"])}})
-        
-    
+
+
     return payload, payload_upd, ids_upd
 
 # AWS Lambda handler function
-blacklist = []
+blacklist = ['https://app.gambitrewards.com/match/7ae8da6a-5d5f-4fd9-a1f3-4fe40f0dde8e']
 def main(event, context):
     payload, payload_upd, ids_upd = cleanUp()
 
@@ -182,7 +182,7 @@ def main(event, context):
     print("Successfully logged into API backend")
 
     for item in payload:
-        if item["PlayUrl"].split("/")[-1] not in blacklist:
+        if item["PlayUrl"] not in blacklist:
             pl = json.dumps(item)
             unixfy_post = requests.post(API_ENDPOINT + "gambit-plays", data=json.dumps(item), headers={"Authorization": "Bearer " + api_authtoken, "Content-Type": "application/json; charset=utf-8"})
             # Log the output into logfile
@@ -192,14 +192,14 @@ def main(event, context):
 
     counter = 0
     for item in payload_upd:
-        pl = json.dumps(item)
-        unixfy_put = requests.put(API_ENDPOINT + "gambit-plays/" + ids_upd[counter], data=json.dumps(item), headers={"Authorization": "Bearer " + api_authtoken, "Content-Type": "application/json; charset=utf-8"})
-        counter +=1
-        log_file.write(str(unixfy_put.status_code) + " ")
-        print(unixfy_put.text)
-        #print(unixfy_put.json())
-        #sleep(7200)
+        if item["PlayUrl"] not in blacklist:
+            pl = json.dumps(item)
+            unixfy_put = requests.put(API_ENDPOINT + "gambit-plays/" + ids_upd[counter], data=json.dumps(item), headers={"Authorization": "Bearer " + api_authtoken, "Content-Type": "application/json; charset=utf-8"})
+            counter +=1
+            log_file.write(str(unixfy_put.status_code) + " ")
+            print(unixfy_put.text)
+            #print(unixfy_put.json())
+            #sleep(7200)
 
     log_file.close()
     print("Script ending")
-
