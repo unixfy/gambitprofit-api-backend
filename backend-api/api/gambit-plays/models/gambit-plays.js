@@ -12,9 +12,9 @@
  */
 
 //////////// CONFIGURATION //////////////
-// Cost of Gambit card in SB
+// Cost of $10 Gambit card in SB
 // NEEDS TO BE RECONFIGURED IF SB CHANGES COST OF GAMBIT CARD
-var CARD_COST = 950;
+var CARD_COST = 1000;
 ////////////// CONFIGURATION //////////////
 
 // Reward calculation function

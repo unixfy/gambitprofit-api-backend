@@ -15,7 +15,7 @@ function recalculateRewards(play, tokens) {
   ////////////// CONFIGURATION //////////////
   // Change percentage here if discount changes
   // NEEDS TO BE RECONFIGURED IF SB CHANGES COST OF GAMBIT CARD
-  var CARD_COST = 0.95 * tokens;
+  var CARD_COST = 1.00 * tokens;
   ////////////// CONFIGURATION //////////////
 
   // Magic to create one big array with all teams & respective names and reward
