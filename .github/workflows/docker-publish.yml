@@ -29,13 +29,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        images:
-          - gambitprofit-strapi
-          - gambitprofit-updater
+        include:
+          - images: gambitprofit-strapi
+            dockerfile_location: ./backend-api/Dockerfile
+          - images: gambitprofit-updater
+            dockerfile_location: ./update-from-gambitrewards-script/Dockerfile
     
     env:
-      IMAGE_NAME: ${{ matrix.images }}
-      
+      IMAGE_NAME: ${{ matrix.images }}      
       
     runs-on: ubuntu-latest
     permissions:
@@ -76,3 +77,4 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          file: ${{ matrix.dockerfile_location }}
