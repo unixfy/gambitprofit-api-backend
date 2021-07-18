@@ -176,6 +176,7 @@ def cleanUp():
 
     # Iterate through all games
     for key, value in games.items():
+        # Break the loop if the ptw value doesn't exist
         try:
             print(len(value["ptw"]))
         except KeyError:
@@ -183,9 +184,11 @@ def cleanUp():
 
         checkdupe = requests.get(f"{API_ENDPOINT}gambit-plays?PlayUrl=https://app.gambitrewards.com/match/{key}")
         # If the API says this game already exists, append it to the update queue
+        # and don't append it to the create queue
         if checkdupe.json():
             payload_upd = update(key, value, payload_upd)
             ids_upd.append(checkdupe.json()[0]["_id"])
+            continue
 
         PlayDate = value["datetime"][0:19] + value["datetime"][23:]
 
