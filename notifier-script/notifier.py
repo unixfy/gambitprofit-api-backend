@@ -1,6 +1,7 @@
 ############## HOW TO USE ##############
 # Run on AWS Lambda using main() function as handler. Set environment variables (ENCRYPTED) to hold credentials.
 
+# TODO: This script as-is is not functional!!! Many changes need to be made - namely, removing the dependency on Amazon S3 for data storage.
 import json
 import requests
 import dateutil.parser
