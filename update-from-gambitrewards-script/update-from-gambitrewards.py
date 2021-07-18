@@ -1,7 +1,10 @@
 ############## HOW TO USE ##############
 # Run on AWS Lambda using main() function as handler. Set environment variables (ENCRYPTED) to hold credentials.
 
-import json, requests, re, os
+import json
+import os
+import re
+import requests
 
 # from time import sleep
 # import logging
@@ -70,8 +73,8 @@ def getMatches():
             # only post games with 3 or less teams (so we don't end up with nascar etc games)
             if len(game_spec_response["item"]["bet_types_matches"][0]["match_lines"]) <= 3:
                 # If there is a "Play the odds" option, we don't want it - only grab the "Pick the winner" option
-                if (len(game_spec_response["item"]["bet_types_matches"]) > 1):
-                    if (game_spec_response["item"]["bet_types_matches"][1]["bet_type"]["label"] == "Pick the Winner"):
+                if len(game_spec_response["item"]["bet_types_matches"]) > 1:
+                    if game_spec_response["item"]["bet_types_matches"][1]["bet_type"]["label"] == "Pick the Winner":
                         deets["ptw"] = [{"description":
                                              game_spec_response["item"]["bet_types_matches"][1]["match_lines"][0][
                                                  "description"],
@@ -129,7 +132,7 @@ def getMatches():
     return games
 
 
-def update(key, value):
+def update(key, value, payload_upd):
     """
     Function to create a list of items to be updated in our API
     :param key:
@@ -185,7 +188,7 @@ def cleanUp():
     for key, value in games.items():
         checkdupe = requests.get(API_ENDPOINT + "gambit-plays?PlayUrl=" + "https://app.gambitrewards.com/match/" + key)
         # Update Check!
-        if checkdupe.json() != []:
+        if checkdupe.json():
             payload_upd = update(key, value, payload_upd)
             ids_upd.append(checkdupe.json()[0]["_id"])
             continue
@@ -226,9 +229,9 @@ def cleanUp():
 
     return payload, payload_upd, ids_upd
 
+
 # List of plays that should not be updated or created...
 blacklist = ['https://app.gambitrewards.com/match/7ae8da6a-5d5f-4fd9-a1f3-4fe40f0dde8e']
-
 
 payload, payload_upd, ids_upd = cleanUp()
 
