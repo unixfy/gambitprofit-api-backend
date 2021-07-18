@@ -3,8 +3,8 @@ services:
   strapi:
     restart: unless-stopped
     image: docker.pkg.github.com/unixfy/gambitprofit-api-backend/gambitprofit-strapi:latest
-    ports:
-      - 1337:1337
+    expose:
+      - 1337
     environment:
       - DATABASE_CLIENT=mongo
       - DATABASE_HOST=mongo
@@ -13,6 +13,9 @@ services:
       - DATABASE_PORT=27017
       - DATABASE_USERNAME=strapi
       - NODE_ENV=production
+      - VIRTUAL_HOST=api.gambitprofit.com
+      - VIRTUAL_PORT=1337
+      - LETSENCRYPT_HOST=api.gambitprofit.com
 
   mongo:
     restart: unless-stopped
@@ -39,3 +42,29 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --interval 30 --cleanup
+
+  proxy:
+    image: nginxproxy/nginx-proxy:latest
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs:ro
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+    environment:
+      - ENABLE_IPV6=true
+
+  letsencrypt:
+    image: nginxproxy/acme-companion:latest
+    volumes_from:
+      - proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - DEFAULT_EMAIL=admin@unixfy.net
+
+volumes:
+  vhost:
+  html:
