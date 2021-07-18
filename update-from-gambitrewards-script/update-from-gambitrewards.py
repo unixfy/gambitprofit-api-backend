@@ -34,6 +34,10 @@ API_PASSWORD = os.environ['API_PASSWORD']
 #################################################################
 
 def getMatches():
+    """
+    Function to log into GambitRewards and fetch the latest games and return them in a list
+    :return:
+    """
     with requests.Session() as s:
         # Log into Gambit Rewards
         log = s.post(LOGIN_URL, json={"auth": {"email": USERNAME, "password": PASSWORD}})
@@ -125,7 +129,15 @@ def getMatches():
     return games
 
 
-def update(key, value, payload_upd):
+def update(key, value):
+    """
+    Function to create a list of items to be updated in our API
+    :param key:
+    The UUID-like string at the end of each play URL
+    :param value:
+    The various attributes associated with the play
+    :return:
+    """
     if len(value["ptw"]) == 3:
         counter = -1
         for item in value["ptw"]:
@@ -158,6 +170,10 @@ def update(key, value, payload_upd):
 
 
 def cleanUp():
+    """
+    Function that takes our list of plays to create/update and submits them as http requests to our API
+    :return:
+    """
     games = getMatches()
     print("Creating payload: Stage 3")
     print("Games pulled from GambitRewards: " + str(games))
@@ -210,8 +226,9 @@ def cleanUp():
 
     return payload, payload_upd, ids_upd
 
-
+# List of plays that should not be updated or created...
 blacklist = ['https://app.gambitrewards.com/match/7ae8da6a-5d5f-4fd9-a1f3-4fe40f0dde8e']
+
 
 payload, payload_upd, ids_upd = cleanUp()
 
@@ -219,7 +236,7 @@ pl = json.dumps(payload)
 
 log_file = open("/tmp/log-out.json", "w")
 
-# Log into API backend
+# Sign into API backend
 api_log = requests.post(API_ENDPOINT + "auth/local", json={"identifier": API_USERNAME, "password": API_PASSWORD})
 
 # Fetch JWT from API
@@ -236,7 +253,6 @@ for item in payload:
         # Log the output into logfile
         log_file.write(str(unixfy_post.status_code) + " ")
         print(unixfy_post.text)
-        # print(unixfy_post.json())
 
 counter = 0
 for item in payload_upd:
@@ -248,8 +264,6 @@ for item in payload_upd:
         counter += 1
         log_file.write(str(unixfy_put.status_code) + " ")
         print(unixfy_put.text)
-        # print(unixfy_put.json())
-        # sleep(7200)
 
 log_file.close()
 print("Script ending")
