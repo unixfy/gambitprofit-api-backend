@@ -1,14 +1,7 @@
-############## HOW TO USE ##############
-# Run on AWS Lambda using main() function as handler. Set environment variables (ENCRYPTED) to hold credentials.
-
 import json
 import os
 import re
 import requests
-
-# from time import sleep
-# import logging
-# import http
 
 # # Debug logging
 # http.client.HTTPConnection.debuglevel = 1
@@ -41,94 +34,70 @@ def getMatches():
     Function to log into GambitRewards and fetch the latest games and return them in a list
     :return:
     """
-    with requests.Session() as s:
-        # Log into Gambit Rewards
-        log = s.post(LOGIN_URL, json={"auth": {"email": USERNAME, "password": PASSWORD}})
+    # Log into Gambit Rewards
+    gambitrewards_auth = requests.post(LOGIN_URL, json={"auth": {"email": USERNAME, "password": PASSWORD}}).json()
 
-        print("Logged in to GambitRewards successfully")
+    print("Logged in to GambitRewards")
 
-        # Fetch JWT from Gambit
-        authtoken = eval(log.content)["jwt"]
+    # Fetch JWT from the login request
+    gambitrewards_jwt = gambitrewards_auth["jwt"]
 
-        # Grab all the matches from Gambit
-        matches = s.get(MATCHES_ENDPOINT, headers={"Authorization": authtoken})
+    # Grab all the matches from Gambit
+    matches = requests.get(MATCHES_ENDPOINT, headers={"Authorization": gambitrewards_jwt}).json()
+    print(f"Matches response from GambitRewards: {str(matches)}")
 
-        matches_response = json.loads(matches.content)
-        print("Matches response from GambitRewards: " + str(matches_response))
+    print("Adding all items to games dict")
+    games = {}
+    for item in matches["items"]:
+        games[item["id"]] = {"name": item["name"], "datetime": item["datetime"]}
 
-        print("Collected matches")
+    print("Iterating through games dict to get the attributes we need")
+    # id = each game's ID
+    # deets = all of the details (i.e. the values dictionary in the k,v pair in the games
+    # dict consisting of name, datetime)
+    for id, deets in games.items():
+        # Build the URL that will give us the details for each game
+        match_api_url = MATCHES_ENDPOINT + id
 
-        print("Creating payload: Stage 1")
-        games = {}
-        for item in matches_response["items"]:
-            games[item["id"]] = {"name": item["name"], "datetime": item["datetime"]}
+        # Fire off a GET request to the previously generated URL to get details on the game
+        # Then parse as JSON
+        game_spec = requests.get(match_api_url, headers={"Authorization": gambitrewards_jwt})
+        game_spec_response = game_spec.json()
 
-        print("Creating payload: Stage 2")
-        for id, deets in games.items():
-            match_request = MATCHES_ENDPOINT + id
+        # Only consider games with 3 or less teams (so we don't end up with nascar, golf etc games)
+        if len(game_spec_response["item"]["bet_types_matches"][0]["match_lines"]) <= 3:
+            # Loop through all of the bet types matches in the API response
+            # until we find one where the label is pick the winner
+            for bet_types_match in game_spec_response["item"]["bet_types_matches"]:
+                if bet_types_match["bet_type"]["label"] == "Pick the Winner":
+                    # Add the team name and payout for the first 2 teams
+                    deets["ptw"] = [
+                        {
+                            "description": bet_types_match["match_lines"][0]["description"],
+                            "payout": bet_types_match["match_lines"][0]["payout"]
+                        },
+                        {
+                            "description": bet_types_match["match_lines"][1]["description"],
+                            "payout": bet_types_match["match_lines"][1]["payout"]
+                        }
+                    ]
 
-            game_spec = s.get(match_request, headers={"Authorization": authtoken})
-
-            game_spec_response = json.loads(game_spec.content)
-            # only post games with 3 or less teams (so we don't end up with nascar etc games)
-            if len(game_spec_response["item"]["bet_types_matches"][0]["match_lines"]) <= 3:
-                # If there is a "Play the odds" option, we don't want it - only grab the "Pick the winner" option
-                if len(game_spec_response["item"]["bet_types_matches"]) > 1:
-                    if game_spec_response["item"]["bet_types_matches"][1]["bet_type"]["label"] == "Pick the Winner":
-                        deets["ptw"] = [{"description":
-                                             game_spec_response["item"]["bet_types_matches"][1]["match_lines"][0][
-                                                 "description"],
-                                         "payout": game_spec_response["item"]["bet_types_matches"][1]["match_lines"][0][
-                                             "payout"]}, {"description":
-                                                              game_spec_response["item"]["bet_types_matches"][1][
-                                                                  "match_lines"][1]["description"], "payout":
-                                                              game_spec_response["item"]["bet_types_matches"][1][
-                                                                  "match_lines"][1]["payout"]}]
-                        try:
-                            deets["ptw"].append({"description":
-                                                     game_spec_response["item"]["bet_types_matches"][1]["match_lines"][
-                                                         2]["description"], "payout":
-                                                     game_spec_response["item"]["bet_types_matches"][1]["match_lines"][
-                                                         2]["payout"]})
-                        except:
-                            pass
-                    else:
-                        deets["ptw"] = [{"description":
-                                             game_spec_response["item"]["bet_types_matches"][0]["match_lines"][0][
-                                                 "description"],
-                                         "payout": game_spec_response["item"]["bet_types_matches"][0]["match_lines"][0][
-                                             "payout"]}, {"description":
-                                                              game_spec_response["item"]["bet_types_matches"][0][
-                                                                  "match_lines"][1]["description"], "payout":
-                                                              game_spec_response["item"]["bet_types_matches"][0][
-                                                                  "match_lines"][1]["payout"]}]
-                        try:
-                            deets["ptw"].append({"description":
-                                                     game_spec_response["item"]["bet_types_matches"][0]["match_lines"][
-                                                         2]["description"], "payout":
-                                                     game_spec_response["item"]["bet_types_matches"][0]["match_lines"][
-                                                         2]["payout"]})
-                        except:
-                            pass
-                # If there isn't a "Play the odds" option, great! Let's just grab "Pick the winner"
-                else:
-                    deets["ptw"] = [{"description":
-                                         game_spec_response["item"]["bet_types_matches"][0]["match_lines"][0][
-                                             "description"],
-                                     "payout": game_spec_response["item"]["bet_types_matches"][0]["match_lines"][0][
-                                         "payout"]}, {"description": game_spec_response["item"]["bet_types_matches"][0][
-                        "match_lines"][1]["description"], "payout": game_spec_response["item"]["bet_types_matches"][0][
-                        "match_lines"][1]["payout"]}]
+                    # Also try to grab the name and payout for the third team (usually draw)
+                    # However, this doesn't always exist so I need to make sure to catch
+                    # any exceptions that can occur here
                     try:
-                        deets["ptw"].append({"description":
-                                                 game_spec_response["item"]["bet_types_matches"][0]["match_lines"][2][
-                                                     "description"], "payout":
-                                                 game_spec_response["item"]["bet_types_matches"][0]["match_lines"][2][
-                                                     "payout"]})
-                    except:
+                        deets["ptw"].append(
+                            {
+                                "description": bet_types_match["match_lines"][2]["description"],
+                                "payout": bet_types_match["match_lines"][2]["payout"]
+                            }
+                        )
+                    except IndexError:
                         pass
-            else:
-                blacklist.append(id)
+        else:
+            # Temporarily blacklist games with more than 3 teams
+            blacklist.append(id)
+
     return games
 
 
@@ -139,8 +108,34 @@ def update(key, value, payload_upd):
     The UUID-like string at the end of each play URL
     :param value:
     The various attributes associated with the play
+    :param payload_upd:
+    An existing payload to append to
     :return:
     """
+    PlayDate = value["datetime"][0:19] + value["datetime"][23:]
+
+    # All of this data needs to be appended regardless of whether there is a draw or not
+    payload_upd.append(
+        {
+            "Calc": {
+                "HighRisk": {},
+                "MedRisk": {},
+                "NoRisk": {}
+            },
+            "PlayDate": PlayDate,
+            "PlayUrl": "https://app.gambitrewards.com/match/" + key,
+            "Team1": {
+                "Name": value["ptw"][0]["description"],
+                "Reward": float(value["ptw"][0]["payout"])
+            },
+            "Team2": {
+                "Name": value["ptw"][1]["description"],
+                "Reward": float(value["ptw"][1]["payout"])
+            }
+        }
+    )
+
+    # Handle games with a draw (3rd team)
     if len(value["ptw"]) == 3:
         counter = -1
         for item in value["ptw"]:
@@ -151,23 +146,23 @@ def update(key, value, payload_upd):
         draw_reward = value["ptw"][counter]
         value["ptw"].pop(counter)
 
-        PlayDate = value["datetime"][0:19] + value["datetime"][23:]
-
         payload_upd.append(
-            {"Calc": {"HighRisk": {}, "MedRisk": {}, "NoRisk": {}}, "Draw": {"Reward": float(draw_reward["payout"])},
-             "PlayDate": PlayDate, "PlayUrl": "https://app.gambitrewards.com/match/" + key,
-             "Team1": {"Name": value["ptw"][0]["description"], "Reward": float(value["ptw"][0]["payout"])},
-             "Team2": {"Name": value["ptw"][1]["description"], "Reward": float(value["ptw"][1]["payout"])}})
+            {
+                "Draw": {
+                    "Reward": float(draw_reward["payout"])
+                }
+            }
+        )
 
+    # Handle games without a draw (only 2 teams)
+    # In this case, we just append an empty Draw dict to prevent mongo errors
     else:
-
-        PlayDate = value["datetime"][0:19] + value["datetime"][23:]
-        payload_upd.append({"Calc": {"HighRisk": {}, "MedRisk": {}, "NoRisk": {}}, "Draw": {}, "PlayDate": PlayDate,
-                            "PlayUrl": "https://app.gambitrewards.com/match/" + key,
-                            "Team1": {"Name": value["ptw"][0]["description"],
-                                      "Reward": float(value["ptw"][0]["payout"])},
-                            "Team2": {"Name": value["ptw"][1]["description"],
-                                      "Reward": float(value["ptw"][1]["payout"])}})
+        payload_upd.append(
+            {
+                "Draw": {
+                }
+            }
+        )
 
     return payload_upd
 
@@ -181,22 +176,50 @@ def cleanUp():
     print("Creating payload: Stage 3")
     print("Games pulled from GambitRewards: " + str(games))
 
+    # Games to be created
     payload = []
+    # Games to be updated
     payload_upd = []
+    # IDs to be updated
     ids_upd = []
 
+    # Iterate through all games
     for key, value in games.items():
-        checkdupe = requests.get(API_ENDPOINT + "gambit-plays?PlayUrl=" + "https://app.gambitrewards.com/match/" + key)
-        # Update Check!
+        checkdupe = requests.get(f"{API_ENDPOINT}gambit-plays?PlayUrl=https://app.gambitrewards.com/match/{key}")
+        # If the API says this game already exists, append it to the update queue
         if checkdupe.json():
             payload_upd = update(key, value, payload_upd)
             ids_upd.append(checkdupe.json()[0]["_id"])
-            continue
 
         try:
             print(len(value["ptw"]))
         except KeyError:
-            continue
+            pass
+
+        PlayDate = value["datetime"][0:19] + value["datetime"][23:]
+
+        # All of this data needs to be appended regardless of whether there is a draw or not
+        payload.append(
+            {
+                "Calc": {
+                    "HighRisk": {},
+                    "MedRisk": {},
+                    "NoRisk": {}
+                },
+                "PlayDate": PlayDate,
+                "PlayUrl": "https://app.gambitrewards.com/match/" + key,
+                "Team1": {
+                    "Name": value["ptw"][0]["description"],
+                    "Reward": float(value["ptw"][0]["payout"])
+                },
+                "Team2": {
+                    "Name": value["ptw"][1]["description"],
+                    "Reward": float(value["ptw"][1]["payout"])
+                }
+            }
+        )
+
+        # Handle games with a draw
         if len(value["ptw"]) == 3:
             counter = -1
             for item in value["ptw"]:
@@ -207,66 +230,57 @@ def cleanUp():
             draw_reward = value["ptw"][counter]
             value["ptw"].pop(counter)
 
-            PlayDate = value["datetime"][0:19] + value["datetime"][23:]
+            payload.append(
+                {
+                    "Draw": {
+                        "Reward": float(draw_reward["payout"])
+                    }
+                }
+            )
 
-            payload.append({"Calc": {"HighRisk": {}, "MedRisk": {}, "NoRisk": {}},
-                            "Draw": {"Reward": float(draw_reward["payout"])}, "PlayDate": PlayDate,
-                            "PlayUrl": "https://app.gambitrewards.com/match/" + key,
-                            "Team1": {"Name": value["ptw"][0]["description"],
-                                      "Reward": float(value["ptw"][0]["payout"])},
-                            "Team2": {"Name": value["ptw"][1]["description"],
-                                      "Reward": float(value["ptw"][1]["payout"])}})
-
-        elif len(value["ptw"]) < 3:
-
-            PlayDate = value["datetime"][0:19] + value["datetime"][23:]
-            payload.append({"Calc": {"HighRisk": {}, "MedRisk": {}, "NoRisk": {}}, "Draw": {}, "PlayDate": PlayDate,
-                            "PlayUrl": "https://app.gambitrewards.com/match/" + key,
-                            "Team1": {"Name": value["ptw"][0]["description"],
-                                      "Reward": float(value["ptw"][0]["payout"])},
-                            "Team2": {"Name": value["ptw"][1]["description"],
-                                      "Reward": float(value["ptw"][1]["payout"])}})
+        # Handle games without a draw
+        else:
+            payload.append(
+                {
+                    "Draw": {
+                    }
+                }
+            )
 
     return payload, payload_upd, ids_upd
 
 
 # List of plays that should not be updated or created...
+# This game has some weird negative numbers for odds
 blacklist = ['https://app.gambitrewards.com/match/7ae8da6a-5d5f-4fd9-a1f3-4fe40f0dde8e']
 
+# Get all our data from the cleanup() function
 payload, payload_upd, ids_upd = cleanUp()
 
-pl = json.dumps(payload)
-
-log_file = open("/tmp/log-out.json", "w")
-
 # Sign into API backend
-api_log = requests.post(API_ENDPOINT + "auth/local", json={"identifier": API_USERNAME, "password": API_PASSWORD})
+api_auth = requests.post(f"{API_ENDPOINT}auth/local",
+                         json={"identifier": API_USERNAME, "password": API_PASSWORD}).json()
 
-# Fetch JWT from API
-api_log_response = api_log.json()
-api_authtoken = api_log_response["jwt"]
+# Fetch JWT from GambitProfit API
+api_jwt = api_auth["jwt"]
+
 print("Successfully logged into API backend")
 
 for item in payload:
     if item["PlayUrl"] not in blacklist:
-        pl = json.dumps(item)
-        unixfy_post = requests.post(API_ENDPOINT + "gambit-plays", data=json.dumps(item),
-                                    headers={"Authorization": "Bearer " + api_authtoken,
-                                             "Content-Type": "application/json; charset=utf-8"})
-        # Log the output into logfile
-        log_file.write(str(unixfy_post.status_code) + " ")
-        print(unixfy_post.text)
+        api_post = requests.post(f"{API_ENDPOINT}gambit-plays", json=item,
+                                 headers={"Authorization": f"Bearer {api_jwt}"})
 
+        print(api_post.text)
+
+# The counter helps iterate through the IDs that need to be updated
+# Yeah, this is really shitty solution but it works :shrug:
 counter = 0
 for item in payload_upd:
     if item["PlayUrl"] not in blacklist:
-        pl = json.dumps(item)
-        unixfy_put = requests.put(API_ENDPOINT + "gambit-plays/" + ids_upd[counter], data=json.dumps(item),
-                                  headers={"Authorization": "Bearer " + api_authtoken,
-                                           "Content-Type": "application/json; charset=utf-8"})
+        api_put = requests.put(f"{API_ENDPOINT}gambit-plays/{ids_upd[counter]}", json=item,
+                               headers={"Authorization": f"Bearer {api_jwt}"})
         counter += 1
-        log_file.write(str(unixfy_put.status_code) + " ")
-        print(unixfy_put.text)
+        print(api_put.text)
 
-log_file.close()
 print("Script ending")
