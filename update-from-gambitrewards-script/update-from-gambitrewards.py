@@ -211,48 +211,45 @@ def cleanUp():
     return payload, payload_upd, ids_upd
 
 
-# AWS Lambda handler function
 blacklist = ['https://app.gambitrewards.com/match/7ae8da6a-5d5f-4fd9-a1f3-4fe40f0dde8e']
 
+payload, payload_upd, ids_upd = cleanUp()
 
-def main(event, context):
-    payload, payload_upd, ids_upd = cleanUp()
+pl = json.dumps(payload)
 
-    pl = json.dumps(payload)
+log_file = open("/tmp/log-out.json", "w")
 
-    log_file = open("/tmp/log-out.json", "w")
+# Log into API backend
+api_log = requests.post(API_ENDPOINT + "auth/local", json={"identifier": API_USERNAME, "password": API_PASSWORD})
 
-    # Log into API backend
-    api_log = requests.post(API_ENDPOINT + "auth/local", json={"identifier": API_USERNAME, "password": API_PASSWORD})
+# Fetch JWT from API
+api_log_response = api_log.json()
+api_authtoken = api_log_response["jwt"]
+print("Successfully logged into API backend")
 
-    # Fetch JWT from API
-    api_log_response = api_log.json()
-    api_authtoken = api_log_response["jwt"]
-    print("Successfully logged into API backend")
+for item in payload:
+    if item["PlayUrl"] not in blacklist:
+        pl = json.dumps(item)
+        unixfy_post = requests.post(API_ENDPOINT + "gambit-plays", data=json.dumps(item),
+                                    headers={"Authorization": "Bearer " + api_authtoken,
+                                             "Content-Type": "application/json; charset=utf-8"})
+        # Log the output into logfile
+        log_file.write(str(unixfy_post.status_code) + " ")
+        print(unixfy_post.text)
+        # print(unixfy_post.json())
 
-    for item in payload:
-        if item["PlayUrl"] not in blacklist:
-            pl = json.dumps(item)
-            unixfy_post = requests.post(API_ENDPOINT + "gambit-plays", data=json.dumps(item),
-                                        headers={"Authorization": "Bearer " + api_authtoken,
-                                                 "Content-Type": "application/json; charset=utf-8"})
-            # Log the output into logfile
-            log_file.write(str(unixfy_post.status_code) + " ")
-            print(unixfy_post.text)
-            # print(unixfy_post.json())
+counter = 0
+for item in payload_upd:
+    if item["PlayUrl"] not in blacklist:
+        pl = json.dumps(item)
+        unixfy_put = requests.put(API_ENDPOINT + "gambit-plays/" + ids_upd[counter], data=json.dumps(item),
+                                  headers={"Authorization": "Bearer " + api_authtoken,
+                                           "Content-Type": "application/json; charset=utf-8"})
+        counter += 1
+        log_file.write(str(unixfy_put.status_code) + " ")
+        print(unixfy_put.text)
+        # print(unixfy_put.json())
+        # sleep(7200)
 
-    counter = 0
-    for item in payload_upd:
-        if item["PlayUrl"] not in blacklist:
-            pl = json.dumps(item)
-            unixfy_put = requests.put(API_ENDPOINT + "gambit-plays/" + ids_upd[counter], data=json.dumps(item),
-                                      headers={"Authorization": "Bearer " + api_authtoken,
-                                               "Content-Type": "application/json; charset=utf-8"})
-            counter += 1
-            log_file.write(str(unixfy_put.status_code) + " ")
-            print(unixfy_put.text)
-            # print(unixfy_put.json())
-            # sleep(7200)
-
-    log_file.close()
-    print("Script ending")
+log_file.close()
+print("Script ending")
