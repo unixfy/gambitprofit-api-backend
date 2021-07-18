@@ -1,0 +1,41 @@
+version: "3.9"
+services:
+  strapi:
+    restart: unless-stopped
+    image: docker.pkg.github.com/unixfy/gambitprofit-api-backend/gambitprofit-strapi:latest
+    ports:
+      - 1337:1337
+    environment:
+      - DATABASE_CLIENT=mongo
+      - DATABASE_HOST=mongo
+      - DATABASE_NAME=strapi
+      - DATABASE_PASSWORD=strapi
+      - DATABASE_PORT=27017
+      - DATABASE_USERNAME=strapi
+      - NODE_ENV=production
+
+  mongo:
+    restart: unless-stopped
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=strapi
+      - MONGO_INITDB_ROOT_PASSWORD=strapi
+      - MONGO_INITDB_DATABASE=strapi
+    volumes:
+      - ./db:/data/db
+
+  updater:
+    restart: unless-stopped
+    image: docker.pkg.github.com/unixfy/gambitprofit-api-backend/gambitprofit-updater:latest
+    environment:
+      - GAMBIT_USERNAME=
+      - GAMBIT_PASSWORD=
+      - API_USERNAME=
+      - API_PASSWORD=
+
+  watchtower:
+    image: containrrr/watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30 --cleanup
