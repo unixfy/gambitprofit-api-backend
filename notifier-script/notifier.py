@@ -16,8 +16,8 @@ init()
 # API endpoint (needs to include full path)
 API_ENDPOINT = "https://hfj9ocdja8.execute-api.eu-west-1.amazonaws.com/gambit-plays"
 API_PARAMS = {
-    "_limit": 50,
-    "_sort": "updatedAt:DESC"
+    "_limit": 200,
+    "_sort": "PlayDate:DESC"
 }
 
 # Set LOCAL storage file location (note that this would be stored in an S3 bucket on Lambda)
@@ -28,7 +28,7 @@ storage_file = "/tmp/storage.txt"
 storage_file_s3 = "storage.txt"
 
 # Percentage profit NoRisk at which a notification will be triggered.
-notif_threshold = -1.11
+notif_threshold = 2.63
 
 # Array of Discord webhook URLs
 # Unixfy server, BM server, SB server
@@ -94,7 +94,7 @@ def sendNotifs():
             {
                 "title": ":money_mouth: New Good Gambit Plays Found",
                 "url": "https://gambitprofit.com",
-                "description": "Visit [:link: GambitProfit.com](https://gambitprofit.com) for more information.",
+                "description": "Visit [:link: GambitProfit.com](https://gambitprofit.com) for more information.\n\n**Are you annoyed by these notifications**? Instead of leaving :poop: reactions, please consider giving some feedback: https://forms.gle/o4Nb3YvU4tndtepG7",
                 "color": 1205222,
                 "fields": [
 
@@ -186,7 +186,7 @@ def main(event, context):
             "Name"] + " (" + str(bet["Team2"]["Reward"]) + ")"
 
         # Make sure there are at least 30 min until play starts, and the norisk profitpercard is at least 4%
-        if (difference.total_seconds() / 60) > 30 and bet["Calc"]["NoRisk"]["ProfitPerCard"] > notif_threshold:
+        if (difference.total_seconds() / 60) > 30 and bet["Calc"]["NoRisk"]["ProfitPerCard"] >= notif_threshold:
             # Prelim passed means the game hasn't started, and is profitable enough
             print(colored(gamename + " => PRELIM PASSED", "yellow"))
             # Validate if the game is in the storage file (i.e. already notified). If it is not, then notify; otherwise, pass
