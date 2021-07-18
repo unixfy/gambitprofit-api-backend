@@ -14,7 +14,7 @@ init()
 
 ###################### START user configuration section ######################
 # API endpoint (needs to include full path)
-API_ENDPOINT = "https://hfj9ocdja8.execute-api.eu-west-1.amazonaws.com/gambit-plays"
+API_ENDPOINT = "https://api.gambitprofit.com/gambit-plays"
 API_PARAMS = {
     "_limit": 200,
     "_sort": "PlayDate:DESC"
