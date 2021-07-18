@@ -14,11 +14,11 @@ on:
   
   pull_request:
     branches:
-      - main
+      - master
   
   push:
     branches:
-      - main
+      - master
   
 env:
   REGISTRY: docker.pkg.github.com/unixfy/gambitprofit-api-backend
