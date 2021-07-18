@@ -31,9 +31,9 @@ jobs:
       matrix:
         include:
           - images: gambitprofit-strapi
-            dockerfile_location: ./backend-api/Dockerfile
+            context: backend-api
           - images: gambitprofit-updater
-            dockerfile_location: ./update-from-gambitrewards-script/Dockerfile
+            context: update-from-gambitrewards-script
     
     env:
       IMAGE_NAME: ${{ matrix.images }}      
@@ -73,8 +73,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
-          context: .
+          context: ${{ matrix.context }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          file: ${{ matrix.dockerfile_location }}
