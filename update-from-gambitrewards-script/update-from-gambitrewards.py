@@ -115,8 +115,7 @@ def update(key, value, payload_upd):
     PlayDate = value["datetime"][0:19] + value["datetime"][23:]
 
     # All of this data needs to be appended regardless of whether there is a draw or not
-    payload_upd.append(
-        {
+    current_game =  {
             "Calc": {
                 "HighRisk": {},
                 "MedRisk": {},
@@ -133,7 +132,6 @@ def update(key, value, payload_upd):
                 "Reward": float(value["ptw"][1]["payout"])
             }
         }
-    )
 
     # Handle games with a draw (3rd team)
     if len(value["ptw"]) == 3:
@@ -146,23 +144,16 @@ def update(key, value, payload_upd):
         draw_reward = value["ptw"][counter]
         value["ptw"].pop(counter)
 
-        payload_upd.append(
-            {
-                "Draw": {
-                    "Reward": float(draw_reward["payout"])
-                }
-            }
-        )
+        current_game["Draw"] = {
+            "Reward": float(draw_reward["payout"])
+        }
 
     # Handle games without a draw (only 2 teams)
     # In this case, we just append an empty Draw dict to prevent mongo errors
     else:
-        payload_upd.append(
-            {
-                "Draw": {
-                }
-            }
-        )
+        current_game["Draw"] = {}
+
+    payload_upd.append(current_game)
 
     return payload_upd
 
@@ -185,39 +176,37 @@ def cleanUp():
 
     # Iterate through all games
     for key, value in games.items():
+        try:
+            print(len(value["ptw"]))
+        except KeyError:
+            continue
+
         checkdupe = requests.get(f"{API_ENDPOINT}gambit-plays?PlayUrl=https://app.gambitrewards.com/match/{key}")
         # If the API says this game already exists, append it to the update queue
         if checkdupe.json():
             payload_upd = update(key, value, payload_upd)
             ids_upd.append(checkdupe.json()[0]["_id"])
 
-        try:
-            print(len(value["ptw"]))
-        except KeyError:
-            pass
-
         PlayDate = value["datetime"][0:19] + value["datetime"][23:]
 
         # All of this data needs to be appended regardless of whether there is a draw or not
-        payload.append(
-            {
-                "Calc": {
-                    "HighRisk": {},
-                    "MedRisk": {},
-                    "NoRisk": {}
-                },
-                "PlayDate": PlayDate,
-                "PlayUrl": "https://app.gambitrewards.com/match/" + key,
-                "Team1": {
-                    "Name": value["ptw"][0]["description"],
-                    "Reward": float(value["ptw"][0]["payout"])
-                },
-                "Team2": {
-                    "Name": value["ptw"][1]["description"],
-                    "Reward": float(value["ptw"][1]["payout"])
-                }
+        current_game = {
+            "Calc": {
+                "HighRisk": {},
+                "MedRisk": {},
+                "NoRisk": {}
+            },
+            "PlayDate": PlayDate,
+            "PlayUrl": "https://app.gambitrewards.com/match/" + key,
+            "Team1": {
+                "Name": value["ptw"][0]["description"],
+                "Reward": float(value["ptw"][0]["payout"])
+            },
+            "Team2": {
+                "Name": value["ptw"][1]["description"],
+                "Reward": float(value["ptw"][1]["payout"])
             }
-        )
+        }
 
         # Handle games with a draw
         if len(value["ptw"]) == 3:
@@ -230,22 +219,15 @@ def cleanUp():
             draw_reward = value["ptw"][counter]
             value["ptw"].pop(counter)
 
-            payload.append(
-                {
-                    "Draw": {
-                        "Reward": float(draw_reward["payout"])
-                    }
-                }
-            )
+            current_game["Draw"] = {
+                "Reward": float(draw_reward["payout"])
+            }
 
         # Handle games without a draw
         else:
-            payload.append(
-                {
-                    "Draw": {
-                    }
-                }
-            )
+            current_game["Draw"] = {}
+
+        payload.append(current_game)
 
     return payload, payload_upd, ids_upd
 
