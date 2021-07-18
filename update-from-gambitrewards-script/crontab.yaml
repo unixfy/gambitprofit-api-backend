@@ -2,7 +2,7 @@ jobs:
   - name: updater
     command: python /app/update-from-gambitrewards.py
     shell: /bin/bash
-    schedule: "*/5 * * * *"
+    schedule: "*/2 * * * *"
     timezone: America/New_York
     user: root
     onFailure:
