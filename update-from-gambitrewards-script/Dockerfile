@@ -3,7 +3,7 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 # Copy everything from update-from-gambitrewards-script to the workdir (/app)
-COPY update-from-gambitrewards-script ./
+COPY . ./
 RUN chmod 0777 /app/update-from-gambitrewards.py
 
 # Install deps
