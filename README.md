@@ -1,6 +1,8 @@
 # gambitprofit-api-backend
 Backend code for the GambitProfit API. 
 
+# THIS IS NO LONGER UPDATED - use unixfy/gambitprofit-backend-v2 instead
+
 ---
 
 ## How does our Docker tagging system work:
