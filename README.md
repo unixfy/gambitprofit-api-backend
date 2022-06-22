@@ -1,7 +1,7 @@
 # gambitprofit-api-backend
 Backend code for the GambitProfit API. 
 
-# THIS IS NO LONGER UPDATED - use unixfy/gambitprofit-backend-v2 instead
+# THIS IS NO LONGER UPDATED - use unixfy/gambitprofit-new-backend instead
 
 ---
 
